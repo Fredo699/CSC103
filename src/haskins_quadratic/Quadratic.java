@@ -33,7 +33,7 @@ public class Quadratic implements Cloneable{
         coef_a = ca;
         coef_b = cb;
         coef_c = cc;
-        calculateRoots();
+        getRootNum();
     }
 
     /**
