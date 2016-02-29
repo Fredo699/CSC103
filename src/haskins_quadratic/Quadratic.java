@@ -77,7 +77,8 @@ public class Quadratic implements Cloneable{
             if(Math.pow(coef_b, 2) > temp4ac) return_val = 2;
         }
 
-        setNumRoots(return_val);
+        num_roots = return_val;
+        calculateRoots();
         return return_val;
     }
 
@@ -163,15 +164,6 @@ public class Quadratic implements Cloneable{
      */
     public String toString(){
         return coef_a + "x^2 + " + coef_b + "x + " + coef_c;
-    }
-
-    /**
-     * Set coef_c
-     * @param num int
-     */
-    private void setNumRoots(int num){
-        num_roots = num;
-        calculateRoots();
     }
 
     /**
