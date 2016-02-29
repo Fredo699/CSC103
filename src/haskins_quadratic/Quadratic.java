@@ -180,7 +180,7 @@ public class Quadratic implements Cloneable{
     private void calculateRoots(){
         switch(num_roots){
             case 1:
-                root_1 = (coef_a == 0)?((-1 * coef_c)/coef_b):((-1 * coef_b));
+                root_1 = (coef_a == 0)?((-1 * coef_c)/coef_b):((-1 * coef_b)/(2 * coef_as));
                 break;
             case 2:
                 root_1 = ((-1 * coef_b)-(Math.sqrt(Math.pow(coef_b, 2) - (4 * coef_a * coef_c))))/(2 * coef_a);
