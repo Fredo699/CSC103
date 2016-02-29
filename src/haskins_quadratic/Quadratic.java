@@ -65,34 +65,20 @@ public class Quadratic implements Cloneable{
      * @return int
      */
     public int getRootNum(){
+        int return_val = -1;
+        double temp4ac = 4 * coef_a * coef_c;
+
         if(coef_a == 0){
-            if(coef_b == 0){
-                if(coef_c == 0){
-                    setNumRoots(3);
-                    return 3;
-                }else{
-                    setNumRoots(0);
-                    return 0;
-                }
-            }else{
-                setNumRoots(1);
-                return 1;
-            }
+            if(coef_b == 0) return_val = (coef_c == 0)?3:0;
+            else return_val = 1;
         }else{
-            if(Math.pow(coef_b, 2) < (4 * coef_a * coef_c)){
-                setNumRoots(0);
-                return 0;
-            }
-            if(Math.pow(coef_b, 2) == (4 * coef_a * coef_c)){
-                setNumRoots(1);
-                return 1;
-            }
-            if(Math.pow(coef_b, 2) > (4 * coef_a * coef_c)){
-                setNumRoots(2);
-                return 2;
-            }
+            if(Math.pow(coef_b, 2) < temp4ac) return_val = 0;
+            if(Math.pow(coef_b, 2) == temp4ac) return_val = 1;
+            if(Math.pow(coef_b, 2) > temp4ac) return_val = 2;
         }
-        return -1;
+
+        setNumRoots(return_val);
+        return return_val;
     }
 
     /**
