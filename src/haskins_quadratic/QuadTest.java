@@ -1,5 +1,6 @@
 package haskins_quadratic;
 
+
 /**
  * CSC103 Lab1 Quadratic
  * 2/10/2016
