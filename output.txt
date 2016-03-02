@@ -1,0 +1,43 @@
+Filepath: 
+/home/fredo/ic.txt
+
+Starting tests for line 0...
+
+q1 = 2.0x^2 + 8.0x + 6.0
+q2 = 1.0x^2 + 1.0x + 1.0
+At 3.0 q1 is 48.0 and q2 is 13.0
+
+Scaling by 2.0...
+q1 yields: 4.0x^2 + 16.0x + 12.0
+q2 yields: 2.0x^2 + 2.0x + 2.0
+
+Starting tests for line 1...
+
+q1 = 0.0x^2 + 0.0x + 0.0
+q2 = 2.0x^2 + 2.0x + 2.0
+At 1.0 q1 is 0.0 and q2 is 6.0
+
+Scaling by 4.0...
+q1 yields: 0.0x^2 + 0.0x + 0.0
+q2 yields: 8.0x^2 + 8.0x + 8.0
+
+Starting tests for line 2...
+
+q1 = 0.0x^2 + 0.0x + 5.0
+q2 = 0.0x^2 + 1.0x + 2.0
+At 2.0 q1 is 5.0 and q2 is 4.0
+
+Scaling by 5.0...
+q1 yields: 0.0x^2 + 0.0x + 25.0
+q2 yields: 0.0x^2 + 5.0x + 10.0
+
+Starting tests for line 3...
+
+q1 = 0.0x^2 + 2.0x + 6.0
+q2 = 1.0x^2 + 0.0x + 2.0
+At 3.0 q1 is 12.0 and q2 is 11.0
+
+Scaling by 2.0...
+q1 yields: 0.0x^2 + 4.0x + 12.0
+q2 yields: 2.0x^2 + 0.0x + 4.0
+
