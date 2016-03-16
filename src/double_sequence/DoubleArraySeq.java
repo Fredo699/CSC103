@@ -1,3 +1,5 @@
+package double_sequence;
+
 // File: DoubleArraySeq.java from the package edu.colorado.collections
 
 // This is an assignment for students to complete after reading Chapter 3 of
@@ -47,7 +49,7 @@ public class DoubleArraySeq implements Cloneable
    //   2. For an empty sequence (with no elements), we do not care what is 
    //      stored in any of data; for a non-empty sequence, the elements of the
    //      sequence are stored in data[0] through data[manyItems-1], and we
-   //      don’t care what’s in the rest of data.
+   //      donï¿½t care whatï¿½s in the rest of data.
    //   3. If there is a current element, then it lies in data[currentIndex];
    //      if there is no current element, then currentIndex equals manyItems. 
    private double[ ] data;
