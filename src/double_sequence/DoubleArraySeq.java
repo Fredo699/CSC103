@@ -1,3 +1,5 @@
+package double_sequence;
+
 public class DoubleArraySeq implements Cloneable
 {
     // Invariant of the DoubleArraySeq class:

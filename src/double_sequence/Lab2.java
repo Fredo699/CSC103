@@ -1,3 +1,5 @@
+package double_sequence;
+
 /**
  * CSC103 Lab2 SequenceTest
  * 2/10/2016
