@@ -20,7 +20,7 @@ public class SequenceTest {
     }
 
     /**
-     * 
+     * Take commands as line of String
      * @param st
      */
     public void menu(String st){
@@ -117,6 +117,12 @@ public class SequenceTest {
         }
     }
 
+    /**
+     * Populate Sequence with given set
+     * @param args
+     * @param data_member
+     * @throws IOException
+     */
     public void createSequence(String[] args, DoubleArraySeq data_member) throws IOException{
         if(args.length <= 0) throw new IOException("Exception - no data was created");
         data_member = new DoubleArraySeq(args.length);
