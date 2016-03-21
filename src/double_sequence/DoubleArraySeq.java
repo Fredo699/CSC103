@@ -27,9 +27,8 @@ public class DoubleArraySeq implements Cloneable
      *   new double[10].
      **/
     public DoubleArraySeq(){
-        this(10);
+        this(5);
     }
-
 
     /**
      * Initialize an empty sequence with a specified initial capacity. Note that
@@ -53,7 +52,6 @@ public class DoubleArraySeq implements Cloneable
         start();
     }
 
-
     /**
      * Add a new element to this sequence, after the current element.
      * If the new element would take this sequence beyond its current capacity,
@@ -74,10 +72,16 @@ public class DoubleArraySeq implements Cloneable
      *   arithmetic overflow.
      **/
     public void addAfter(double element){
-        if(isCurrent()) data[++currentIndex] = element;
-        else data[size()] = element;
+        double prev = element;
+        ensureCapacity(size() + 1);
+        if(!isCurrent()) start();
+        for(int i = currentIndex; i < manyItems - 1;){
+            element = data[++i];
+            data[i] = prev;
+            prev = element;
+        }
+        data[manyItems - 1] = prev;
     }
-
 
     /**
      * Add a new element to this sequence, before the current element.
@@ -99,10 +103,17 @@ public class DoubleArraySeq implements Cloneable
      *   arithmetic overflow.
      **/
     public void addBefore(double element){
-        if(isCurrent()) data[--currentIndex] = element;
-        else data[0] = element;
+        ensureCapacity(size() + 1);
+        if(!isCurrent()) start();
+        double next = getCurrent();
+        data[currentIndex] = element;
+        for(int i = currentIndex+1; i < manyItems - 1; i++){
+            element = data[i];
+            data[i] = next;
+            next = element;
+        }
+        data[manyItems - 1] = next;
     }
-
 
     /**
      * Place the contents of another sequence at the end of this sequence.
@@ -127,7 +138,6 @@ public class DoubleArraySeq implements Cloneable
         // Implemented by student.
     }
 
-
     /**
      * Move forward, so that the current element is now the next element in
      * this sequence.
@@ -146,7 +156,6 @@ public class DoubleArraySeq implements Cloneable
     public void advance(){
         currentIndex++;
     }
-
 
     /**
      * Generate a copy of this sequence.
@@ -179,7 +188,6 @@ public class DoubleArraySeq implements Cloneable
         return answer;
     }
 
-
     /**
      * Create a new sequence that contains all the elements from one sequence
      * followed by another.
@@ -192,7 +200,7 @@ public class DoubleArraySeq implements Cloneable
      * @return
      *   a new sequence that has the elements of s1 followed by the
      *   elements of s2 (with no current element)
-     * @exception NullPointerException.
+     * @exception NullPointerException
      *   Indicates that one of the arguments is null.
      * @exception OutOfMemoryError
      *   Indicates insufficient memory for the new sequence.
@@ -201,10 +209,9 @@ public class DoubleArraySeq implements Cloneable
      *   Integer.MAX_VALUE will cause an arithmetic overflow
      *   that will cause the sequence to fail.
      **/
-    public static DoubleArraySeq catenation(DoubleArraySeq s1, DoubleArraySeq s2){
+    public static DoubleArraySeq catenation(DoubleArraySeq s1, DoubleArraySeq s2) throws NullPointerException{
         return new DoubleArraySeq();
     }
-
 
     /**
      * Change the current capacity of this sequence.
@@ -218,9 +225,13 @@ public class DoubleArraySeq implements Cloneable
      *   Indicates insufficient memory for: new int[minimumCapacity].
      **/
     public void ensureCapacity(int minimumCapacity){
-        manyItems += (minimumCapacity < manyItems)?0:10;
+        if(minimumCapacity > manyItems){
+            double[] temp = data.clone();
+            data = new double[minimumCapacity+5];
+            for(int i = 0; i < manyItems; i++) data[i] = temp[i];
+            manyItems = minimumCapacity;
+        }
     }
-
 
     /**
      * Accessor method to get the current capacity of this sequence.
@@ -233,7 +244,6 @@ public class DoubleArraySeq implements Cloneable
     public int getCapacity(){
         return manyItems;
     }
-
 
     /**
      * Accessor method to get the current element of this sequence.
@@ -251,7 +261,6 @@ public class DoubleArraySeq implements Cloneable
         else throw new IllegalStateException("There is no current");
     }
 
-
     /**
      * Accessor method to determine whether this sequence has a specified
      * current element that can be retrieved with the
@@ -261,7 +270,7 @@ public class DoubleArraySeq implements Cloneable
      *   true (there is a current element) or false (there is no current element at the moment)
      **/
     public boolean isCurrent(){
-        return (size() > 0 && currentIndex >= 0 && currentIndex < manyItems);
+        return (currentIndex >= 0 && currentIndex < manyItems);
     }
 
     /**
@@ -278,10 +287,11 @@ public class DoubleArraySeq implements Cloneable
      *   Indicates that there is no current element, so
      *   removeCurrent may not be called.
      **/
-    public void removeCurrent(){
-        // Implemented by student.
+    public void removeCurrent() throws IllegalStateException{
+        if(!isCurrent()) throw new IllegalStateException("There is no current element to remove");
+        for(int i = currentIndex; i < manyItems - 1; i++) data[i] = data[i+1];
+        data[manyItems - 1] = 0.0;
     }
-
 
     /**
      * Determine the number of elements in this sequence.
@@ -290,11 +300,10 @@ public class DoubleArraySeq implements Cloneable
      *   the number of elements in this sequence
      **/
     public int size(){
-        int i = 0;
-        while(i < manyItems && (data[i] < 0) || (data[i++] > 0));
-        return i;
+        int count = 0;
+        for(int i = 0; i < manyItems; i++) count += (data[i] != 0.0)?1:0;
+        return count;
     }
-
 
     /**
      * Set the current element at the front of this sequence.
@@ -305,7 +314,7 @@ public class DoubleArraySeq implements Cloneable
      *   element).
      **/
     public void start(){
-        currentIndex = (size() > 0)?0:-1;
+        currentIndex = 0;
     }
 
     /**
@@ -334,12 +343,11 @@ public class DoubleArraySeq implements Cloneable
      */
     public String toString(){
         String deets = "The sequence: ";
-        if(manyItems > 0){
-            for(int i = 0; i < size(); i++) deets += data[i++] + " ";
-            deets += "\nNumber of Elements: " + getCapacity() +
+        int n = size();
+        if(n > 0){
+            for(int i = 0; i < n; i++) deets += data[i] + " ";
+            deets += "\nNumber of Elements: " + n +
                     "\nThe current element: " + getCurrent();
-        }else{
-            deets += "empty";
         }
         return deets + "\n";
     }
@@ -361,11 +369,13 @@ public class DoubleArraySeq implements Cloneable
     }
 
     public int retrieveElement(double num){
-        return 0;
+        int temp = -1;
+        for(int i = 0; i < manyItems; i++) if(data[i] == num) temp = i;
+        return temp;
     }
 
     public void setCurrent(int i){
-
+        currentIndex = i;
     }
 }
            

@@ -32,7 +32,6 @@ public class Lab2{
                 test.menu(line);
             }
         }catch (Exception e){
-            System.out.println("Error reading file");
             e.printStackTrace();
         }
     }

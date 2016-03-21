@@ -12,7 +12,7 @@ package double_sequence;
 import java.io.IOException;
 
 public class SequenceTest {
-    public DoubleArraySeq sq1, sq2, sq3;
+    public DoubleArraySeq sq[] = new DoubleArraySeq[3];
 
     /**
      * Default Constructor
@@ -26,83 +26,81 @@ public class SequenceTest {
      * @param st
      */
     public void menu(String st){
-        String input[] = st.split("(\\s-\\s|\\s-|-\\s|-|\\s|,)");
-        String args[] = new String[input.length-1];
-        int cmd = Integer.parseInt(input[0]);
+        System.out.println(st);
 
-        System.out.print("Input line:  " + cmd + " - ");
-
-        for(int i = 0; i < args.length; i++){
-            args[i] = input[i+1];
-            System.out.print(args[i]);
-            if(i < args.length - 1) System.out.print(",");
+        String input[] = st.split("([\\s]*-[\\s]*)");
+        String args[] = null;
+        int cmd = 0;
+        if(input.length >= 1){
+            if(input.length > 1) args = input[1].split("(,)");
+            cmd = Integer.parseInt(input[0]);
         }
-        System.out.println();
+
 
         try{
             switch(cmd){
                 case 1:
                     System.out.println("Create a Sequence\n" +
                             "-------------------------");
-                    createSequence(args, sq1);
+                    createSequence(args, 0);
                     break;
                 case 2:
                     System.out.println("Delete a Number\n" +
                             "-------------------------");
-                    sq1.setCurrent(sq1.retrieveElement(Double.parseDouble(args[0])));
-                    sq1.removeCurrent();
+                    sq[0].setCurrent(sq[0].retrieveElement(Double.parseDouble(args[0])));
+                    sq[0].removeCurrent();
                     break;
                 case 3:
                     System.out.println("Delete the first number from the sequence\n" +
                             "-------------------------");
-                    sq1.removeFront();
+                    sq[0].removeFront();
                     break;
                 case 4:
                     System.out.println("Add a number before another number\n" +
                             "-------------------------");
-                    sq1.setCurrent(Integer.parseInt(args[1]));
-                    sq1.addBefore(Double.parseDouble(args[1]));
+                    sq[0].setCurrent(Integer.parseInt(args[0])-1);
+                    sq[0].addBefore(Double.parseDouble(args[1]));
                     break;
                 case 5:
                     System.out.println("Add a number after a number\n" +
                             "-------------------------");
-                    sq1.setCurrent(Integer.parseInt(args[1]));
-                    sq1.addAfter(Double.parseDouble(args[1]));
+                    sq[0].setCurrent(Integer.parseInt(args[0])-1);
+                    sq[0].addAfter(Double.parseDouble(args[1]));
                     break;
                 case 6:
                     System.out.println("Add a number to the end of the sequence\n" +
                             "-------------------------");
-                    sq1.addEnd(Double.parseDouble(args[0]));
+                    sq[0].addEnd(Double.parseDouble(args[0]));
                     break;
                 case 7:
                     System.out.println("Display a number at a certain index\n" +
                             "-------------------------");
-                        sq1.setCurrent(sq1.retrieveElement(Double.parseDouble(args[0])));
+                    sq[0].setCurrent(sq[0].retrieveElement(Double.parseDouble(args[0])));
                     break;
                 case 8:
                     System.out.println("Display the last element in the sequence\n" +
                             "-------------------------");
-                    sq1.currentLast();
+                    sq[0].currentLast();
                     break;
                 case 9:
                     System.out.println("Replace a number with another number\n" +
                             "-------------------------");
-                    sq1.setCurrent(sq1.retrieveElement(Double.parseDouble(args[0])));
-                    sq1.addBefore(Double.parseDouble(args[1]));
-                    sq1.advance();
-                    sq1.removeCurrent();
+                    sq[0].setCurrent(sq[0].retrieveElement(Double.parseDouble(args[0])));
+                    sq[0].addBefore(Double.parseDouble(args[1]));
+                    sq[0].advance();
+                    sq[0].removeCurrent();
                     break;
                 case 10:
                     System.out.println("Append another sequence to the first sequence\n" +
                             "-------------------------");
-                    sq2 = new DoubleArraySeq(args.length);
-                    createSequence(args, sq2);
-                    sq1.addAll(sq2);
+                    sq[1] = new DoubleArraySeq(args.length);
+                    createSequence(args, 1);
+                    sq[1].addAll(sq[1]);
                     break;
                 case 11:
                     System.out.println("Create a clone sequence\n" +
                             "-------------------------");
-                    sq2 = sq1.clone();
+                    sq[1] = sq[0].clone();
                     break;
                 case 12:
                     System.out.println("Print the sequence\n" +
@@ -112,8 +110,10 @@ public class SequenceTest {
                     System.out.println("Quit\n" +
                             "-------------------------");
                     break;
+                default:
+                    System.out.println("CommandIndex Error: " + cmd);
             }
-            System.out.println(sq1.toString());
+            if(sq[0] != null) System.out.println(sq[0].toString());
         }catch(IOException e){
             System.out.println(e.getMessage() + "\n");
         }
@@ -125,12 +125,15 @@ public class SequenceTest {
      * @param data_member
      * @throws IOException
      */
-    public void createSequence(String[] args, DoubleArraySeq data_member) throws IOException{
-        if(args.length <= 0) throw new IOException("Exception - no data was created");
-        data_member = new DoubleArraySeq(args.length);
-        for(String arg : args){
-            System.out.println(arg);
-            data_member.addAfter(Double.parseDouble(arg));
+    public void createSequence(String[] args, int data_member) throws IOException{
+        if(args == null) throw new IOException("Exception - no data was created");
+        sq[data_member] = new DoubleArraySeq(args.length);
+        for(int i = 0; i < args.length; i++){
+            try{
+                sq[data_member].addAfter(Double.parseDouble(args[i]));
+            }catch(ArrayIndexOutOfBoundsException e){
+                e.printStackTrace();
+            }
         }
     }
 }
