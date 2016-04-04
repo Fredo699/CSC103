@@ -1,5 +1,4 @@
 package double_sequence;
-
 /**
  * CSC103 Lab2 SequenceTest
  * 2/10/2016
@@ -12,7 +11,9 @@ package double_sequence;
 import java.io.IOException;
 
 public class SequenceTest {
-    public DoubleArraySeq sq[] = new DoubleArraySeq[3];
+    public DoubleArraySeq sq[] = {
+            new DoubleArraySeq(), new DoubleArraySeq(), new DoubleArraySeq()
+    };
 
     /**
      * Default Constructor
@@ -42,7 +43,8 @@ public class SequenceTest {
                 case 1:
                     System.out.println("Create a Sequence\n" +
                             "-------------------------");
-                    createSequence(args, 0);
+                    if(sq[0].size() == 0) createSequence(args, 0);
+                    else createSequence(args, 1);
                     break;
                 case 2:
                     System.out.println("Delete a Number\n" +
@@ -75,7 +77,7 @@ public class SequenceTest {
                 case 7:
                     System.out.println("Display a number at a certain index\n" +
                             "-------------------------");
-                    sq[0].setCurrent(sq[0].retrieveElement(Double.parseDouble(args[0])));
+                    sq[0].setCurrent(Integer.parseInt(args[0]) - 1);
                     break;
                 case 8:
                     System.out.println("Display the last element in the sequence\n" +
@@ -93,9 +95,7 @@ public class SequenceTest {
                 case 10:
                     System.out.println("Append another sequence to the first sequence\n" +
                             "-------------------------");
-                    sq[1] = new DoubleArraySeq(args.length);
-                    createSequence(args, 1);
-                    sq[1].addAll(sq[1]);
+                    sq[0].addAll(sq[1]);
                     break;
                 case 11:
                     System.out.println("Create a clone sequence\n" +
@@ -113,7 +113,7 @@ public class SequenceTest {
                 default:
                     System.out.println("CommandIndex Error: " + cmd);
             }
-            if(sq[0] != null) System.out.println(sq[0].toString());
+            if(sq[0].size() > 0) System.out.println(sq[0].toString());
         }catch(IOException e){
             System.out.println(e.getMessage() + "\n");
         }
@@ -127,13 +127,8 @@ public class SequenceTest {
      */
     public void createSequence(String[] args, int data_member) throws IOException{
         if(args == null) throw new IOException("Exception - no data was created");
-        sq[data_member] = new DoubleArraySeq(args.length);
-        for(int i = 0; i < args.length; i++){
-            try{
-                sq[data_member].addAfter(Double.parseDouble(args[i]));
-            }catch(ArrayIndexOutOfBoundsException e){
-                e.printStackTrace();
-            }
-        }
+        double temp[] = new double[args.length];
+        for(int i = 0; i < args.length; i++) temp[i] = Double.parseDouble(args[i]);
+        sq[data_member] = new DoubleArraySeq(temp);
     }
 }

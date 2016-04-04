@@ -48,94 +48,14 @@ public class DoubleArraySeq implements Cloneable
      **/
     public DoubleArraySeq(int initialCapacity){
         data = new double[initialCapacity];
-        manyItems = initialCapacity;
+        manyItems = 0;
         start();
     }
 
-    /**
-     * Add a new element to this sequence, after the current element.
-     * If the new element would take this sequence beyond its current capacity,
-     * then the capacity is increased before adding the new element.
-     * @param element
-     *   the new element that is being added
-     * @postcondition
-     *   A new copy of the element has been added to this sequence. If there was
-     *   a current element, then the new element is placed after the current
-     *   element. If there was no current element, then the new element is placed
-     *   at the end of the sequence. In all cases, the new element becomes the
-     *   new current element of this sequence.
-     * @exception OutOfMemoryError
-     *   Indicates insufficient memory for increasing the sequence's capacity.
-     * @note
-     *   An attempt to increase the capacity beyond
-     *   Integer.MAX_VALUE will cause the sequence to fail with an
-     *   arithmetic overflow.
-     **/
-    public void addAfter(double element){
-        double prev = element;
-        ensureCapacity(size() + 1);
-        if(!isCurrent()) start();
-        for(int i = currentIndex; i < manyItems - 1;){
-            element = data[++i];
-            data[i] = prev;
-            prev = element;
-        }
-        data[manyItems - 1] = prev;
-    }
-
-    /**
-     * Add a new element to this sequence, before the current element.
-     * If the new element would take this sequence beyond its current capacity,
-     * then the capacity is increased before adding the new element.
-     * @param element
-     *   the new element that is being added
-     * @postcondition
-     *   A new copy of the element has been added to this sequence. If there was
-     *   a current element, then the new element is placed before the current
-     *   element. If there was no current element, then the new element is placed
-     *   at the start of the sequence. In all cases, the new element becomes the
-     *   new current element of this sequence.
-     * @exception OutOfMemoryError
-     *   Indicates insufficient memory for increasing the sequence's capacity.
-     * @note
-     *   An attempt to increase the capacity beyond
-     *   Integer.MAX_VALUE will cause the sequence to fail with an
-     *   arithmetic overflow.
-     **/
-    public void addBefore(double element){
-        ensureCapacity(size() + 1);
-        if(!isCurrent()) start();
-        double next = getCurrent();
-        data[currentIndex] = element;
-        for(int i = currentIndex+1; i < manyItems - 1; i++){
-            element = data[i];
-            data[i] = next;
-            next = element;
-        }
-        data[manyItems - 1] = next;
-    }
-
-    /**
-     * Place the contents of another sequence at the end of this sequence.
-     * @param addend
-     *   a sequence whose contents will be placed at the end of this sequence
-     * @precondition
-     *   The parameter, addend, is not null.
-     * @postcondition
-     *   The elements from addend have been placed at the end of
-     *   this sequence. The current element of this sequence remains where it
-     *   was, and the addend is also unchanged.
-     * @exception NullPointerException
-     *   Indicates that addend is null.
-     * @exception OutOfMemoryError
-     *   Indicates insufficient memory to increase the size of this sequence.
-     * @note
-     *   An attempt to increase the capacity beyond
-     *   Integer.MAX_VALUE will cause an arithmetic overflow
-     *   that will cause the sequence to fail.
-     **/
-    public void addAll(DoubleArraySeq addend){
-        // Implemented by student.
+    public DoubleArraySeq(double list[]){
+        data = list;
+        manyItems = data.length;
+        start();
     }
 
     /**
@@ -225,11 +145,12 @@ public class DoubleArraySeq implements Cloneable
      *   Indicates insufficient memory for: new int[minimumCapacity].
      **/
     public void ensureCapacity(int minimumCapacity){
-        if(minimumCapacity > manyItems){
-            double[] temp = data.clone();
+        int n = getCapacity();
+        size();
+        if(minimumCapacity > n){
+            double temp[] = data;
             data = new double[minimumCapacity+5];
-            for(int i = 0; i < manyItems; i++) data[i] = temp[i];
-            manyItems = minimumCapacity;
+            for(int i = 0; i < temp.length; ++i) data[i] = temp[i];
         }
     }
 
@@ -242,7 +163,7 @@ public class DoubleArraySeq implements Cloneable
      *   the current capacity of this sequence
      **/
     public int getCapacity(){
-        return manyItems;
+        return data.length;
     }
 
     /**
@@ -270,7 +191,7 @@ public class DoubleArraySeq implements Cloneable
      *   true (there is a current element) or false (there is no current element at the moment)
      **/
     public boolean isCurrent(){
-        return (currentIndex >= 0 && currentIndex < manyItems);
+        return (currentIndex >= 0 && currentIndex < size());
     }
 
     /**
@@ -301,7 +222,8 @@ public class DoubleArraySeq implements Cloneable
      **/
     public int size(){
         int count = 0;
-        for(int i = 0; i < manyItems; i++) count += (data[i] != 0.0)?1:0;
+        for(int i = 0; i < data.length; i++) count += (data[i] != 0.0)?1:0;
+        manyItems = count;
         return count;
     }
 
@@ -348,34 +270,129 @@ public class DoubleArraySeq implements Cloneable
             for(int i = 0; i < n; i++) deets += data[i] + " ";
             deets += "\nNumber of Elements: " + n +
                     "\nThe current element: " + getCurrent();
-        }
+        }else deets += "is empty";
         return deets + "\n";
     }
 
-    public void addFront(double num){
+    /**
+     * Add a new element to this sequence, before the current element.
+     * If the new element would take this sequence beyond its current capacity,
+     * then the capacity is increased before adding the new element.
+     * @param element
+     *   the new element that is being added
+     * @postcondition
+     *   A new copy of the element has been added to this sequence. If there was
+     *   a current element, then the new element is placed before the current
+     *   element. If there was no current element, then the new element is placed
+     *   at the start of the sequence. In all cases, the new element becomes the
+     *   new current element of this sequence.
+     * @exception OutOfMemoryError
+     *   Indicates insufficient memory for increasing the sequence's capacity.
+     * @note
+     *   An attempt to increase the capacity beyond
+     *   Integer.MAX_VALUE will cause the sequence to fail with an
+     *   arithmetic overflow.
+     **/
+    public void addBefore(double element){
+        ensureCapacity(size() + 1);
+        if(!isCurrent()) addFront(element);
+        else{
+            for(int i = getCapacity() - 1; i > currentIndex; --i) data[i] = data[i - 1];
+            data[currentIndex] = element;
+        }
+        size();
+    }
 
+    /**
+     * Add a new element to this sequence, after the current element.
+     * If the new element would take this sequence beyond its current capacity,
+     * then the capacity is increased before adding the new element.
+     * @param element
+     *   the new element that is being added
+     * @postcondition
+     *   A new copy of the element has been added to this sequence. If there was
+     *   a current element, then the new element is placed after the current
+     *   element. If there was no current element, then the new element is placed
+     *   at the end of the sequence. In all cases, the new element becomes the
+     *   new current element of this sequence.
+     * @exception OutOfMemoryError
+     *   Indicates insufficient memory for increasing the sequence's capacity.
+     * @note
+     *   An attempt to increase the capacity beyond
+     *   Integer.MAX_VALUE will cause the sequence to fail with an
+     *   arithmetic overflow.
+     **/
+    public void addAfter(double element){
+        int n = size();
+        ensureCapacity(n + 1);
+        if(n == 0) addFront(element);
+        else{
+            if(!isCurrent()) currentLast();
+            advance();
+            for(int i = getCapacity() - 1; i > currentIndex;--i) data[i] = data[i-1];
+            data[currentIndex] = element;
+        }
+        size();
+    }
+
+    /**
+     * Place the contents of another sequence at the end of this sequence.
+     * @param addend
+     *   a sequence whose contents will be placed at the end of this sequence
+     * @precondition
+     *   The parameter, addend, is not null.
+     * @postcondition
+     *   The elements from addend have been placed at the end of
+     *   this sequence. The current element of this sequence remains where it
+     *   was, and the addend is also unchanged.
+     * @exception NullPointerException
+     *   Indicates that addend is null.
+     * @exception OutOfMemoryError
+     *   Indicates insufficient memory to increase the size of this sequence.
+     * @note
+     *   An attempt to increase the capacity beyond
+     *   Integer.MAX_VALUE will cause an arithmetic overflow
+     *   that will cause the sequence to fail.
+     **/
+    public void addAll(DoubleArraySeq addend){
+        // Implemented by student.
+    }
+
+    public void addFront(double num){
+        ensureCapacity(size() + 1);
+        int n = getCapacity();
+        for(int i = n + 1; i > 0; --i) data[i] = data[i - 1];
+        data[0] = num;
+        start();
     }
 
     public void addEnd(double num){
-
+        currentLast();
+        addAfter(num);
     }
 
     public void removeFront(){
-
+        for(int i = 0; i < size(); ++i) data[i] = data[i + 1];
+        if(isCurrent() && currentIndex > 0) --currentIndex;
+        else start();
     }
 
     public void currentLast(){
-
+        currentIndex = size() - 1;
     }
 
     public int retrieveElement(double num){
         int temp = -1;
-        for(int i = 0; i < manyItems; i++) if(data[i] == num) temp = i;
+        int i = -1;
+        while(i < size() && temp == -1){
+            if(data[++i] == num) temp = i;
+        }
         return temp;
     }
 
     public void setCurrent(int i){
-        currentIndex = i;
+        if(i > size()) currentLast();
+        else currentIndex = i;
     }
 }
            
