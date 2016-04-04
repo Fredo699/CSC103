@@ -1,4 +1,12 @@
 package double_sequence;
+/**
+ * CSC103 Lab2 SequenceTest
+ * 2/10/2016
+ *
+ * DoubleArraySeq Class
+ *
+ * @author Timothy Haskins & Fred Frey
+ */
 
 public class DoubleArraySeq implements Cloneable
 {
@@ -264,6 +272,7 @@ public class DoubleArraySeq implements Cloneable
      * @return
      */
     public String toString(){
+        if(!isCurrent()) start();
         String deets = "The sequence: ";
         int n = size();
         if(n > 0){
@@ -355,7 +364,13 @@ public class DoubleArraySeq implements Cloneable
      *   that will cause the sequence to fail.
      **/
     public void addAll(DoubleArraySeq addend){
-        // Implemented by student.
+        int n = addend.size();
+        addend.start();
+        ensureCapacity(size() + n);
+        for(int i = 0; i < n; ++i){
+            addAfter(addend.getCurrent());
+            addend.advance();
+        }
     }
 
     public void addFront(double num){
@@ -378,7 +393,9 @@ public class DoubleArraySeq implements Cloneable
     }
 
     public void currentLast(){
-        currentIndex = size() - 1;
+        int n = size();
+        if(n == 0) start();
+        else currentIndex = n - 1;
     }
 
     public int retrieveElement(double num){
@@ -393,6 +410,10 @@ public class DoubleArraySeq implements Cloneable
     public void setCurrent(int i){
         if(i > size()) currentLast();
         else currentIndex = i;
+    }
+
+    public int getCurrentIndex(){
+        return currentIndex;
     }
 }
            
