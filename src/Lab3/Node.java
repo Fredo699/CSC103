@@ -8,14 +8,14 @@ package Lab3;
  * @author Timothy Haskins
  */
 public class Node implements Cloneable{
-    private int data;
+    private double data;
     private Node link;
 
     Node(){
         this(0, null);
     }
 
-    Node(int d, Node l){
+    Node(double d, Node l){
         data = d;
         link = l;
     }
@@ -24,11 +24,11 @@ public class Node implements Cloneable{
         return link;
     }
 
-    int getData(){
+    double getData(){
         return data;
     }
 
-    void setData(int newElem){
+    void setData(double newElem){
         data = newElem;
     }
 

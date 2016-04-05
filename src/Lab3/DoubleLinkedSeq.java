@@ -17,7 +17,20 @@ public class DoubleLinkedSeq implements Cloneable{
      *   This sequence is empty.
      **/
     DoubleLinkedSeq(){
+        cursor = null;
         head = new Node();
+        head.setLink(null);
+        tail = head;
+    }
+
+    DoubleLinkedSeq(double list[]){
+        head = new Node(list[0], null);
+        Node temp = head;
+        for(int i = 1; i < list.length; ++i){
+            temp.setLink(new Node(list[i], temp.getLink()));
+            temp = temp.getLink();
+        }
+        cursor = tail = temp;
     }
 
     /**
@@ -29,7 +42,40 @@ public class DoubleLinkedSeq implements Cloneable{
      *   true (there is a current element) or false (there is no current element at the moment)
      **/
     boolean isCurrent(){
-        return (cursor != null);
+        return (cursor != tail && cursor.getLink() == null);
+    }
+
+    void setCurrent(int distance){
+        Node temp = head;
+        for(int i = 0; i < distance; ++i) temp = temp.getLink();
+        cursor = temp;
+    }
+
+    Node retrieveElement(double elem){
+        Node temp = head;
+        while(temp.getData() != elem){
+            if (temp.getLink() == null) return null;
+            temp = temp.getLink();
+        }
+        return temp;
+    }
+
+    void removeFront(){
+        if(head.getLink() != null) head = head.getLink();
+        cursor = head;
+        reassociateTail();
+    }
+
+    void addEnd(double elem){
+        Node temp = new Node(elem, null);
+        reassociateTail();
+        tail.setLink(temp);
+        tail = temp;
+    }
+
+    void currentLast(){
+        reassociateTail();
+        cursor = tail;
     }
 
     /**
@@ -76,14 +122,13 @@ public class DoubleLinkedSeq implements Cloneable{
      * @exception OutOfMemoryError
      *   Indicates insufficient memory for a new node.
      **/
-    void addAfter(int element) throws OutOfMemoryError{
+    void addAfter(double element) throws OutOfMemoryError{
         if(!isCurrent()){
             reassociateTail();
 
             if(head == tail){
-                if(head.getData() == 0){
-                    head.setData(element);
-                }else{
+                if(head.getData() == 0) head.setData(element);
+                else{
                     tail = new Node(element, null);
                     head.setLink(tail);
                     cursor = tail;
@@ -131,7 +176,7 @@ public class DoubleLinkedSeq implements Cloneable{
      * @exception OutOfMemoryError
      *   Indicates insufficient memory for a new node.
      **/
-    void addBefore(int element) throws OutOfMemoryError{
+    void addBefore(double element) throws OutOfMemoryError{
         Node temp = head;
         if(!isCurrent()) cursor = head;
         while(temp.getLink() != cursor && temp != cursor) temp = temp.getLink();
@@ -263,11 +308,15 @@ public class DoubleLinkedSeq implements Cloneable{
 
     static String toString(DoubleLinkedSeq subj){
         Node temp = subj.head;
-        int count = 0;
-        String desc = "";
-        while(temp.getLink() != null){
-            desc += ++count + ":\t" + temp.getData() + "\n";
-            temp = temp.getLink();
+        String desc = "The Sequence:\t";
+        if(temp.getLink() == null){
+            desc += (temp.getData() == 0)?"Blank Sequence\n":temp.getData() + "\n";
+        }else{
+            while(temp.getLink() != null){
+                desc += temp.getData() + ",";
+                temp = temp.getLink();
+            }
+            desc += temp.getData() + "\n";
         }
         return desc;
     }

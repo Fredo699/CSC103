@@ -1,41 +1,37 @@
 package Lab3;
 /**
- * CSC103 DoubleLinkedSeq
- * 3/16/2016
+ * CSC103 Lab2 SequenceTest
+ * 2/10/2016
  *
- * Lab3 class
+ * Lab2 Class (Main)
  *
  * @author Timothy Haskins
  */
-public class Lab3 {
-    public static void main(String args[]){
-        DoubleLinkedSeq test = new DoubleLinkedSeq(),
-            test_2 = new DoubleLinkedSeq();
 
-        System.out.println("Initializing first list ..........");
-        test.start();
-        System.out.println(DoubleLinkedSeq.toString(test));
-        test.addAfter(1);
-        System.out.println(DoubleLinkedSeq.toString(test));
-        test.addAfter(2);
-        System.out.println(DoubleLinkedSeq.toString(test));
-        test.addAfter(3);
-        System.out.println(DoubleLinkedSeq.toString(test));
-        test.addAfter(4);
-        System.out.println(DoubleLinkedSeq.toString(test));
-        test.addAfter(5);
-        System.out.println(DoubleLinkedSeq.toString(test));
-        test.addAfter(6);
-        System.out.println(DoubleLinkedSeq.toString(test));
+import java.io.FileReader;
+import java.util.Scanner;
 
-        System.out.println("Initializing second list .........");
-        test_2.start();
-        test_2.addBefore(1);
-        test_2.addBefore(2);
-        test_2.addBefore(3);
-        test_2.addBefore(4);
-        test_2.addBefore(5);
-        test_2.addBefore(6);
-        System.out.println(DoubleLinkedSeq.toString(test_2));
+public class Lab3{
+    /**
+     * Read in commands from input.txt, feed lines to SequenceTest
+     * @param args
+     */
+    public static void main(String[] args){
+        FileReader file_in;
+        Scanner file_scan;
+        SequenceTest test = new SequenceTest();
+        String line = "";
+
+        try{
+            file_in = new FileReader("input.txt");
+            file_scan = new Scanner(file_in);
+
+            while(file_scan.hasNextLine()){
+                line = file_scan.nextLine();
+                test.menu(line);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
