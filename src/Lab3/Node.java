@@ -1,11 +1,11 @@
 package Lab3;
 /**
- * CSC103 Lab3 Node
+ * CSC103 Node
  * 3/16/2016
  *
  * Node class
  *
- * @author Timothy Haskins
+ * @author Fred Frey & Timothy Haskins
  */
 public class Node implements Cloneable{
     private double data;

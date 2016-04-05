@@ -1,21 +1,17 @@
 package Lab3;
 /**
- * CSC103 Lab2 SequenceTest
- * 2/10/2016
+ * CSC103 SequenceTest
+ * 3/20/2016
  *
  * SequenceTest Class
  *
- * @author Timothy Haskins
+ * @author Fred Frey & Timothy Haskins
  */
-
-import double_sequence.DoubleArraySeq;
 
 import java.io.IOException;
 
 public class SequenceTest {
-    public DoubleLinkedSeq sq[] = {
-            new DoubleLinkedSeq(), new DoubleLinkedSeq()
-    };
+    public DoubleLinkedSeq sq[] = new DoubleLinkedSeq[2];
 
     /**
      * Default Constructor
@@ -45,13 +41,10 @@ public class SequenceTest {
                 case 1:
                     System.out.println("Create a Sequence\n" +
                             "-------------------------");
-                    if(sq[0].size() == 0){
-                        createSequence(args, 0);
-                        sq_used = 0;
-                    }else{
-                        createSequence(args, 1);
-                        sq_used = 1;
-                    }
+                    if(sq[0] == null) sq_used = 0;
+                    else sq_used = 1;
+
+                    createSequence(args, 0);
                     break;
                 case 2:
                     System.out.println("Delete a Number\n" +
@@ -131,7 +124,7 @@ public class SequenceTest {
                 default:
                     System.out.println("CommandIndex Error: " + cmd);
             }
-            System.out.println(sq[sq_used].toString());
+            System.out.println(DoubleLinkedSeq.toString(sq[sq_used]));
         }catch(IOException e){
             System.out.println(e.getMessage() + "\n");
         }

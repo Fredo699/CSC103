@@ -5,7 +5,7 @@ package Lab3;
  *
  * DoubleLinkedSeq class
  *
- * @author Timothy Haskins
+ * @author Fred Frey & Timothy Haskins
  */
 public class DoubleLinkedSeq implements Cloneable{
     private Node head, cursor = null, tail = null;

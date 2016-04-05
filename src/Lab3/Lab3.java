@@ -1,11 +1,11 @@
 package Lab3;
 /**
- * CSC103 Lab2 SequenceTest
- * 2/10/2016
+ * CSC103 Lab3
+ * 3/20/2016
  *
  * Lab2 Class (Main)
  *
- * @author Timothy Haskins
+ * @author Fred Frey & Timothy Haskins
  */
 
 import java.io.FileReader;
