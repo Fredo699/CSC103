@@ -54,6 +54,7 @@ public class DoubleLinkedSeq implements Cloneable{
     boolean find(double elem){
         Node temp = head;
         while(temp.getLink() != null && temp.getData() != elem) temp = temp.getLink();
+        if (temp.getData() == elem) cursor = temp;
         return (temp.getData() == elem);
     }
 
