@@ -78,6 +78,7 @@ public class DoubleLinkedSeq implements Cloneable{
         reassociateTail();
         tail.setLink(temp);
         tail = temp;
+        currentLast();
     }
 
     void currentLast(){
@@ -146,7 +147,7 @@ public class DoubleLinkedSeq implements Cloneable{
                 tail = cursor;
             }
         }else cursor.setLink(new Node(element, cursor.getLink()));
-        reassociateTail();
+        advance();
     }
 
     /**
@@ -237,7 +238,7 @@ public class DoubleLinkedSeq implements Cloneable{
             while(temp.getLink() != cursor)  temp = temp.getLink();
             if(cursor.getLink() == null) temp.setLink(null);
             else temp.setLink(cursor.getLink());
-            cursor = temp;
+            cursor = temp.getLink();
         }else throw new IllegalStateException("No current to remove");
     }
 
@@ -328,8 +329,7 @@ public class DoubleLinkedSeq implements Cloneable{
             }
             desc += temp.getData() + "\n";
         }
+        desc += (isCurrent())?"Current: " + getCurrent().getData() + "\n":"There is no current\n";
         return desc;
     }
 }
-           
-

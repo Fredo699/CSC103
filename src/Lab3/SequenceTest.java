@@ -93,10 +93,8 @@ public class SequenceTest {
                 case 9:
                     System.out.println("Replace a number with another number\n" +
                             "-------------------------");
-                    sq[0].setCurrent(Integer.parseInt(args[0]));
-                    sq[0].addBefore(Double.parseDouble(args[1]));
-                    sq[0].advance();
-                    sq[0].removeCurrent();
+                    while(sq[0].find(Double.parseDouble(args[0])))
+                        sq[0].getCurrent().setData(Double.parseDouble(args[1]));
                     sq_used = 0;
                     break;
                 case 10:
