@@ -42,13 +42,19 @@ public class DoubleLinkedSeq implements Cloneable{
      *   true (there is a current element) or false (there is no current element at the moment)
      **/
     boolean isCurrent(){
-        return (cursor != tail && cursor.getLink() == null);
+        return (getCurrent() != null);
     }
 
     void setCurrent(int distance){
         Node temp = head;
-        for(int i = 0; i < distance; ++i) temp = temp.getLink();
+        for(int i = 0; i < distance && temp.getLink() != null; ++i) temp = temp.getLink();
         cursor = temp;
+    }
+
+    boolean find(double elem){
+        Node temp = head;
+        while(temp.getLink() != null && temp.getData() != elem) temp = temp.getLink();
+        return (temp.getData() == elem);
     }
 
     Node retrieveElement(double elem){
@@ -89,8 +95,8 @@ public class DoubleLinkedSeq implements Cloneable{
      *   Indicates that there is no current element, so
      *   getCurrent</CODE> may not be called.
      **/
-    double getCurrent(){
-        return cursor.getData();
+    Node getCurrent(){
+        return cursor;
     }
 
     /**
@@ -226,10 +232,11 @@ public class DoubleLinkedSeq implements Cloneable{
         Node temp = head;
 
         if(isCurrent()){
-            while(temp != cursor && temp.getLink() != cursor)  temp = temp.getLink();
-            temp.setLink(cursor.getLink() == null?null:cursor.getLink());
-            cursor = (cursor.getLink() == null)?null:cursor.getLink();
-        }
+            while(temp.getLink() != cursor)  temp = temp.getLink();
+            if(cursor.getLink() == null) temp.setLink(null);
+            else temp.setLink(cursor.getLink());
+            cursor = temp;
+        }else throw new IllegalStateException("No current to remove");
     }
 
     /**

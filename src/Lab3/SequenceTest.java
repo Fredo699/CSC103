@@ -49,8 +49,7 @@ public class SequenceTest {
                 case 2:
                     System.out.println("Delete a Number\n" +
                             "-------------------------");
-                    sq[0].setCurrent(Integer.parseInt(args[0]));
-                    sq[0].removeCurrent();
+                    if(sq[0].find(Double.parseDouble(args[0]))) sq[0].removeCurrent();
                     sq_used = 0;
                     break;
                 case 3:
