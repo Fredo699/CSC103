@@ -196,6 +196,7 @@ public class DoubleLinkedSeq implements Cloneable{
         }
     }
 
+    
     /**
      * Move forward, so that the current element is now the next element in
      * this sequence.
@@ -313,9 +314,10 @@ public class DoubleLinkedSeq implements Cloneable{
         s1.addAll(s2);
         return s1;
     }
-
-    static String toString(DoubleLinkedSeq subj){
-        Node temp = subj.head;
+    
+    @Override
+    public String toString(){
+        Node temp = head;
         String desc = "The Sequence:\t";
         if(temp.getLink() == null){
             desc += (temp.getData() == 0)?"Blank Sequence\n":temp.getData() + "\n";

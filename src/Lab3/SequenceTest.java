@@ -44,7 +44,7 @@ public class SequenceTest {
                     if(sq[0] == null) sq_used = 0;
                     else sq_used = 1;
 
-                    createSequence(args, 0);
+                    createSequence(args, sq_used);
                     break;
                 case 2:
                     System.out.println("Delete a Number\n" +
@@ -123,7 +123,7 @@ public class SequenceTest {
                 default:
                     System.out.println("CommandIndex Error: " + cmd);
             }
-            System.out.println(DoubleLinkedSeq.toString(sq[sq_used]));
+            System.out.println(sq[sq_used].toString());
         }catch(IOException e){
             System.out.println(e.getMessage() + "\n");
         }
