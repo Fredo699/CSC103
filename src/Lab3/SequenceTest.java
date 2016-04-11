@@ -30,7 +30,7 @@ public class SequenceTest {
         String input[] = st.split("([\\s]*-[\\s]*)");
         String args[] = null;
         int cmd = 0;
-        DoubleLinkedSeq current_sequence = sq[0];
+        int sq_used = 0;
         if(input.length >= 1){
             if(input.length > 1) args = input[1].split("(,)");
             cmd = Integer.parseInt(input[0]);
@@ -42,79 +42,79 @@ public class SequenceTest {
                 case 1:
                     System.out.println("Create a Sequence\n" +
                             "-------------------------");
-                    if(null != current_sequence) current_sequence = sq[1];
-                    createSequence(args, current_sequence);
+                    if(null != sq[sq_used]) sq_used = 1;
+                    createSequence(args, sq_used);
                     break;
                 case 2:
                     System.out.println("Delete a Number\n" +
                             "-------------------------");
-                    current_sequence = sq[0];
-                    if(findInList(Double.parseDouble(args[0]), current_sequence) > 0) sq[0].removeCurrent();
+                    sq_used = 0;
+                    if(findInList(Double.parseDouble(args[0]), sq[sq_used]) > 0) sq[0].removeCurrent();
                     break;
                 case 3:
                     System.out.println("Delete the first number from the sequence\n" +
                             "-------------------------");
-                    current_sequence = sq[0];
-                    current_sequence.removeFront();
+                    sq_used = 0;
+                    sq[sq_used].removeFront();
                     break;
                 case 4:
                     System.out.println("Add a number before another number\n" +
                             "-------------------------");
-                    current_sequence = sq[0];
-                    current_sequence.setCurrent(Integer.parseInt(args[0])-1);
-                    current_sequence.addBefore(Double.parseDouble(args[1]));
+                    sq_used = 0;
+                    sq[sq_used].setCurrent(Integer.parseInt(args[0])-1);
+                    sq[sq_used].addBefore(Double.parseDouble(args[1]));
                     break;
                 case 5:
                     System.out.println("Add a number after a number\n" +
                             "-------------------------");
-                    current_sequence = sq[0];
-                    current_sequence.setCurrent(Integer.parseInt(args[0])-1);
-                    current_sequence.addAfter(Double.parseDouble(args[1]));
+                    sq_used = 0;
+                    sq[sq_used].setCurrent(Integer.parseInt(args[0])-1);
+                    sq[sq_used].addAfter(Double.parseDouble(args[1]));
                     break;
                 case 6:
                     System.out.println("Add a number to the end of the sequence\n" +
                             "-------------------------");
-                    current_sequence = sq[0];
-                    current_sequence.addEnd(Double.parseDouble(args[0]));
+                    sq_used = 0;
+                    sq[sq_used].addEnd(Double.parseDouble(args[0]));
                     break;
                 case 7:
                     System.out.println("Display a number at a certain index\n" +
                             "-------------------------");
-                    current_sequence = sq[0];
-                    current_sequence.setCurrent(Integer.parseInt(args[0]) - 1);
+                    sq_used = 0;
+                    sq[sq_used].setCurrent(Integer.parseInt(args[0]) - 1);
                     break;
                 case 8:
                     System.out.println("Display the last element in the sequence\n" +
                             "-------------------------");
-                    current_sequence = sq[0];
-                    current_sequence.currentLast();
+                    sq_used = 0;
+                    sq[sq_used].currentLast();
                     break;
                 case 9:
                     System.out.println("Replace a number with another number\n" +
                             "-------------------------");
-                    current_sequence = sq[0];
+                    sq_used = 0;
                     int temp = -1;
                     while(0 < temp){
-                        temp = findInList(Double.parseDouble(args[0]), current_sequence);
-                        current_sequence.retrieveElement(temp).setData(Double.parseDouble(args[1]));
+                        temp = findInList(Double.parseDouble(args[0]), sq[sq_used]);
+                        sq[sq_used].retrieveElement(temp).setData(Double.parseDouble(args[1]));
                     }
                     break;
                 case 10:
                     System.out.println("Append another sequence to the first sequence\n" +
                             "-------------------------");
-                    current_sequence = sq[0];
+                    sq_used = 0;
                     sq[0].addAll(sq[1]);
                     break;
                 case 11:
                     System.out.println("Create a clone sequence\n" +
                             "-------------------------");
-                    current_sequence = sq[0];
-                    sq[2] = (DoubleLinkedSeq) current_sequence.clone();
+                    sq_used = 0;
+                    sq[2] = (DoubleLinkedSeq) sq[sq_used].clone();
                     break;
                 case 12:
                     System.out.println("Print the sequence\n" +
                             "-------------------------");
-                    current_sequence = sq[Integer.parseInt(args[0]) - 1];
+                    sq_used = Integer.parseInt(args[0]) - 1;
                     break;
                 case 13:
                     System.out.println("Quit\n" +
@@ -123,7 +123,7 @@ public class SequenceTest {
                 default:
                     System.out.println("CommandIndex Error: " + cmd);
             }
-            System.out.println(listToString(current_sequence));
+            System.out.println(listToString(sq[sq_used]));
         }catch(IOException e){
             System.out.println(e.getMessage() + "\n");
         }
@@ -138,12 +138,11 @@ public class SequenceTest {
      * @throws IOException
      *  if the arguments list is empty
      */
-    public void createSequence(String[] args, DoubleLinkedSeq list) throws IOException{
+    public void createSequence(String[] args, int list_index) throws IOException{
         if(null != args){
-            list = null;
-            list = new DoubleLinkedSeq();
-            list.addFront(Double.parseDouble(args[0]));
-            for(int i = 1; i < args.length; ++i) list.addAfter(Double.parseDouble(args[i]));
+            sq[list_index] = new DoubleLinkedSeq();
+            sq[list_index].addFront(Double.parseDouble(args[0]));
+            for(int i = 1; i < args.length; ++i) sq[list_index].addAfter(Double.parseDouble(args[i]));
         }else throw new IOException("Exception - no data was created");
     }
 
@@ -192,7 +191,7 @@ public class SequenceTest {
                     list.advance();
                 }
                 list.setCurrent(findInList(temp, list));
-                desc += "Current: " + "Position->" + temp + "\tValue->" + list.getCurrent() + "\n";
+                desc += "Cursor on: " + list.getCurrent() + "\n";
             }else desc += "Blank sequence\n";
         }else desc = "";
         return desc;

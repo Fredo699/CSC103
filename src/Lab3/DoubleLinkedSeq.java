@@ -237,10 +237,17 @@ public class DoubleLinkedSeq implements Cloneable {
      **/
     public void removeCurrent() throws IllegalStateException{
         if(isCurrent()){
-            Node temp = head;
-            while(null != temp && cursor.getLink() != temp) temp = temp.getLink();
-            temp.setLink(cursor.getLink());
-            cursor = temp.getLink();
+        	if (cursor == tail){
+        		Node temp = head;
+        		while(temp.getLink() != tail) temp = temp.getLink();
+        		tail = temp;
+        		tail.setLink(null);
+        	}
+        	else{
+        		cursor.setData(cursor.getLink().getData());
+	            cursor.setLink(cursor.getLink().getLink());
+        	}
+        		
         }else throw new IllegalStateException("There is no current element");
     }
 
@@ -312,7 +319,7 @@ public class DoubleLinkedSeq implements Cloneable {
             tail = tail.getLink();
             currentLast();
         }else{
-            addFront(element);
+            throw new IllegalStateException("List is empty!");
         }
     }
 
@@ -321,10 +328,10 @@ public class DoubleLinkedSeq implements Cloneable {
      * @exception IllegalStateException.
      *   Indicates that the list is empty.
      */
-    public void currentLast(){
-        if(null != tail){
-            cursor = tail;
-        }else throw new IllegalStateException("The list is empty");
+    public void currentLast() throws IllegalStateException{
+        if(tail == null)
+        	throw new IllegalStateException("list is empty.");
+        cursor = tail;
     }
 
     /**
@@ -355,7 +362,10 @@ public class DoubleLinkedSeq implements Cloneable {
         int count = 0;
         Node temp = head;
         if(null != temp){
-            while(null != temp.getLink() && i > count++) temp = temp.getLink();
+            while(null != temp.getLink() && i > count){
+            	temp = temp.getLink();
+            	count++;
+            }
             cursor = temp;
         }else throw new IllegalStateException("The list is empty");
     }
