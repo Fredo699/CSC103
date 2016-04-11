@@ -11,7 +11,7 @@ package Lab3;
 import java.io.IOException;
 
 public class SequenceTest {
-    public DoubleLinkedSeq sq[] = new DoubleLinkedSeq[2];
+    public DoubleLinkedSeq sq[] = new DoubleLinkedSeq[3];
 
     /**
      * Default Constructor
@@ -93,10 +93,14 @@ public class SequenceTest {
                     System.out.println("Replace a number with another number\n" +
                             "-------------------------");
                     sq_used = 0;
-                    int temp = -1;
-                    while(0 < temp){
-                        temp = findInList(Double.parseDouble(args[0]), sq[sq_used]);
-                        sq[sq_used].retrieveElement(temp).setData(Double.parseDouble(args[1]));
+                    Node temp = sq[sq_used].retrieveElement(0);
+                    while(temp != null){
+                        if (temp.getData() == Double.parseDouble(args[0]))
+                        	{
+                        	temp.setData(Double.parseDouble(args[1]));
+                        	//break;
+                        	}
+                        temp = temp.getLink();
                     }
                     break;
                 case 10:

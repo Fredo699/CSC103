@@ -51,18 +51,18 @@ public class DoubleLinkedSeq implements Cloneable {
      *   Indicates insufficient memory for a new node.
      **/
     public void addAfter(double element) throws OutOfMemoryError{
-        if(isCurrent()){
-            cursor.setLink(new Node(element, cursor.getLink()));
-            advance();
-        }else{
-            if(null == head){
-                head = new Node(element, null);
-                start();
-            }else{
-                tail.setLink(new Node(element, null));
-                tail = tail.getLink();
-            }
+        if(!isCurrent())
+        	throw new IllegalStateException("There is no current!");
+        Node temp = new Node(element, null);
+        if(cursor == tail){
+        	tail.setLink(temp);
+        	tail = temp;
         }
+        else{
+        	temp.setLink(cursor.getLink());
+        	cursor.setLink(temp);
+        }
+        advance();
     }
 
     /**
@@ -290,6 +290,7 @@ public class DoubleLinkedSeq implements Cloneable {
      */
     public void addFront(double element){
         head = new Node(element, head);
+        if (tail == null) tail = head;
         start();
     }
 
