@@ -7,46 +7,28 @@ package Lab3;
  *
  * @author Fred Frey & Timothy Haskins
  */
-public class Node implements Cloneable{
+public class Node {
     private double data;
     private Node link;
-
-    Node(){
-        this(0, null);
+    //constructors
+    public Node(){
+        data = 0;
+        link = null;
     }
-
-    Node(double d, Node l){
+    public Node(double d, Node l){
         data = d;
         link = l;
     }
-
-    Node getLink (){
-        return link;
-    }
-
-    double getData(){
-        return data;
-    }
-
     void setData(double newElem){
         data = newElem;
     }
-
     void setLink (Node newNode){
         link = newNode;
     }
-
-    public Node clone(){
-        Node replica;
-
-        try{
-            replica = (Node) super.clone();
-        }catch(CloneNotSupportedException e){
-            throw new RuntimeException("This class does not implement Cloneable");
-        }
-
-        replica.data = data;
-
-        return replica;
+    double getData(){
+        return data;
+    }
+    Node getLink(){
+        return link;
     }
 }
