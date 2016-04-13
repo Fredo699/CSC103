@@ -61,15 +61,15 @@ public class SequenceTest {
                     System.out.println("Add a number before another number\n" +
                             "-------------------------");
                     sq_used = 0;
-                    sq[sq_used].setCurrent(Integer.parseInt(args[0])-1);
-                    sq[sq_used].addBefore(Double.parseDouble(args[1]));
+                    findInList(Double.parseDouble(args[1]), sq[sq_used]);
+                    sq[sq_used].addBefore(Double.parseDouble(args[0]));
                     break;
                 case 5:
                     System.out.println("Add a number after a number\n" +
                             "-------------------------");
                     sq_used = 0;
-                    sq[sq_used].setCurrent(Integer.parseInt(args[0])-1);
-                    sq[sq_used].addAfter(Double.parseDouble(args[1]));
+                    findInList(Double.parseDouble(args[1]), sq[sq_used]);
+                    sq[sq_used].addAfter(Double.parseDouble(args[0]));
                     break;
                 case 6:
                     System.out.println("Add a number to the end of the sequence\n" +
@@ -81,7 +81,7 @@ public class SequenceTest {
                     System.out.println("Display a number at a certain index\n" +
                             "-------------------------");
                     sq_used = 0;
-                    sq[sq_used].setCurrent(Integer.parseInt(args[0]) - 1);
+                    sq[sq_used].setCurrent(Integer.parseInt(args[0]));
                     break;
                 case 8:
                     System.out.println("Display the last element in the sequence\n" +
@@ -194,7 +194,7 @@ public class SequenceTest {
                     desc += (1 == n--)?"\n":",";
                     list.advance();
                 }
-                list.setCurrent(findInList(temp, list));
+                findInList(temp, list);
                 desc += "Cursor on: " + list.getCurrent() + "\n";
             }else desc += "Blank sequence\n";
         }else desc = "";
