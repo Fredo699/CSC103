@@ -28,6 +28,9 @@ class RunwaySimulation{
    public static void runwaySimulate(int landing_time, int takeoff_time, int average_takeoff_time, int average_landing_time, int max_landtime, int total_time){      
       LinkedQueue<Plane> landings = new LinkedQueue<Plane>();
       LinkedQueue<Plane> takeoffs = new LinkedQueue<Plane>();
+	  LinkedStack<Plane> crashed = new LinkedStack<Plane>();
+	  
+	  LinkedQueue<Plane> not_crashed; // Initialized and used inside of for-loop.
       
       int number_crashed = 0, number_to_takeoff = 0, number_to_land = 0;
       
@@ -74,18 +77,24 @@ class RunwaySimulation{
     	  time_to_next_landing -= 1;
     	  time_to_next_takeoff -= 1;
     	  
+    	  // Handle planes that have crashed:
+    	  LinkedQueue<Plane> landing_clone = landings.clone();
+    	  not_crashed = new LinkedQueue<Plane>();
+    	  while(!landing_clone.isEmpty()){
+    		  Plane next_lander = landing_clone.remove();
+    		  if ((min - next_lander.getTime()) > max_landtime)
+    			  crashed.push(next_lander);
+    		  else
+    			  not_crashed.add(next_lander);
+    	  }
+    	  
+    	  landings = not_crashed;
+    	  
     	  // Handle planes waiting to land/takeoff:
     	  if (!rw.isBusy()){
     		  if (!landings.isEmpty()){
     			  rw.startUsingRunway('L');
     			  Plane now_landing = landings.remove();
-    			  
-    			  while((min - now_landing.getTime()) > max_landtime){ // Perhaps the next plane in the queue crashed?
-    				  number_crashed++;
-    				  landing_queue_time.addNumber(min - now_landing.getTime());
-    				  System.out.println("Plane #" + now_landing.getPlaneNo() + " crashed at " + (now_landing.getTime() + max_landtime) + " minutes.");
-    				  now_landing = landings.remove();
-    			  }
     			  
     			  landing_queue_time.addNumber(min - now_landing.getTime());
     			  
