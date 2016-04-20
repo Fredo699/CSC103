@@ -21,6 +21,8 @@ class Runway{
    public void reduceRemainingTime(){
       if(runwayTimeLeft > 0) 
          --runwayTimeLeft;
+      if(runwayTimeLeft == 0)
+    	  operation = 'I';
    }
    
    // if typeOfUse is 'T' - then the operation is take off and set the runway time left

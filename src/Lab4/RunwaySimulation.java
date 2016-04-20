@@ -5,12 +5,12 @@ import java.util.ArrayList;
 
 class RunwaySimulation{
    public static void main(String[] args){
-      final int TAKEOFFTIME = 2;
+      final int TAKEOFFTIME = 20;
       final int LANDINGTIME = 3;
       final int AVGLAND = 5;
       final int AVGTAKEOFF = 7;
       final int MAXLANDTIME = 9;
-      final int TOTALTIME = 30;
+      final int TOTALTIME = 300;
       
       runwaySimulate(LANDINGTIME, TAKEOFFTIME, AVGTAKEOFF, AVGLAND, MAXLANDTIME, TOTALTIME);
    }
@@ -59,8 +59,10 @@ class RunwaySimulation{
     	  
     	  // Handle new planes coming in/going out:
     	  if(time_to_next_landing == 0){
-    		if (!rw.isBusy())
+    		if (!rw.isBusy()){
     			rw.startUsingRunway('L'); // If the runway isn't busy, land immediately.
+    			landed.add(new Plane(min, 'L'));
+    		}
     		else
     			landings.add(new Plane(min, 'L')); // Add a new plane to the queue.
     		number_to_land += 1;
@@ -68,8 +70,10 @@ class RunwaySimulation{
     	  }
     	  
     	  if(time_to_next_takeoff == 0){
-      		if (!rw.isBusy() && landings.isEmpty())
+      		if (!rw.isBusy() && landings.isEmpty()){
           		rw.startUsingRunway('T'); // If the runway isn't busy, and there are no planes waiting to land, takeoff immediately
+          		tookoff.add(new Plane(min, 'T'));
+      		}
       		else
       			takeoffs.add(new Plane(min, 'T')); // Add a new plane to the queue.
       		number_to_takeoff += 1;
@@ -114,8 +118,9 @@ class RunwaySimulation{
       System.out.println("\n\n---Results---\nNumber of planes that came to take off: " + number_to_takeoff);
 	  System.out.println("Number of planes that came to land: " + number_to_land);
 	  System.out.println("Number of planes that crashed: " + crashed.size());
+	  System.out.println("Number of planes that successfully took off: " + tookoff.size());
 	  System.out.println("Planes that successfully landed: " + landed.size());
-	  System.out.println("Number lost to sky pirates: " + (number_to_land - (landed.size() + crashed.size())));
+	  System.out.println("Number lost to sky pirates: " + ((number_to_land + number_to_takeoff) - (tookoff.size() + landed.size() + crashed.size())));
 	  System.out.println("Average time spent in takeoff queue: " + takeoff_queue_time.average() + " minutes.");
 	  System.out.println("Average time spent in landing queue: " + landing_queue_time.average() + " minutes.");
    }
