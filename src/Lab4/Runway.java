@@ -21,7 +21,7 @@ class Runway{
    public void reduceRemainingTime(){
       if(runwayTimeLeft > 0) 
          --runwayTimeLeft;
-      if(runwayTimeLeft == 0)
+      if(runwayTimeLeft <= 0)
     	  operation = 'I';
    }
    
