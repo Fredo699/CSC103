@@ -1,3 +1,4 @@
+package Lab4;
 // File: LinkedStack.java
 // Complete documentation is available from the LinkedStack link in:
 //   http://www.cs.colorado.edu/~main/docs/

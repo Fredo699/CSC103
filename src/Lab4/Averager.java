@@ -1,3 +1,5 @@
+package Lab4;
+
 // File: Averager.java
 // Additional javadoc documentation is available from the Averager link at
 //   http://www.cs.colorado.edu/~main/docs/

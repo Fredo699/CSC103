@@ -1,3 +1,5 @@
+package Lab4;
+
 class Plane{
    // the plane number arrived to the queue
    // should be in incrementing order

@@ -1,3 +1,5 @@
+package Lab4;
+
 // File: LinkedQueue.java
 // Complete documentation is available from the LinkedQueue link in:
 //   http://www.cs.colorado.edu/~main/docs/

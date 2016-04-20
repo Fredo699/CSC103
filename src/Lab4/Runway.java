@@ -1,13 +1,16 @@
+package Lab4;
+
 class Runway{
    private int timeForLanding;
    private int timeForTakeoff;
    private int runwayTimeLeft;
-   private char operation; // operation can be: I – Idle, L-Landing, T-takeoff
+   private char operation; // operation can be: I ï¿½ Idle, L-Landing, T-takeoff
    
    //set the time for landing, time for takeoff, and the operation to idle.
    public Runway(int time_takeoff, int time_landing){
       timeForLanding = time_landing;
       timeForTakeoff = time_takeoff;
+      operation = 'I';
       runwayTimeLeft = 0;
    }
    
@@ -24,7 +27,7 @@ class Runway{
    // to the time it takes for take off.
    // if typeOfUse is 'L' - then the operation is landing and set the runway time left
    // to the time it takes for landing
-   // if typrofUse is ‘I’ – then the runway is idle, set the runway time left to zero
+   // if typrofUse is ï¿½Iï¿½ ï¿½ then the runway is idle, set the runway time left to zero
    public void startUsingRunway(char typeOfUse){
       switch(typeOfUse){
          case 'T':
@@ -43,7 +46,7 @@ class Runway{
    // returns the type of operation the runway is used for.
    // returns 'L' if the runway is used for is landing.
    // returns 'T' if the runway is used for taking off.
-   // returns ‘I, if the runway is idle
+   // returns ï¿½I, if the runway is idle
    public char kindOfOperation(){
       return operation;
    }

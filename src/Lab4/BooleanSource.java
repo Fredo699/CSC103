@@ -1,3 +1,5 @@
+package Lab4;
+
 // File: BooleanSource.java
 // Additional javadoc documentation is available from the BooleanSource link at
 //   http://www.cs.colorado.edu/~main/docs/
