@@ -55,7 +55,7 @@ public class TreeBag<E> implements Cloneable {
      * @return BTNode
      **/
     public Object retrieve(Comparable element) {
-
+        return null;
     }
 
     /**
