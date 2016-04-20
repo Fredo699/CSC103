@@ -7,8 +7,8 @@ class RunwaySimulation{
    public static void main(String[] args){
       final int TAKEOFFTIME = 2;
       final int LANDINGTIME = 3;
-      final int AVGLAND = 10;
-      final int AVGTAKEOFF = 10;
+      final int AVGLAND = 1;
+      final int AVGTAKEOFF = 1;
       final int MAXLANDTIME = 5;
       final int TOTALTIME = 300;
       
@@ -47,8 +47,8 @@ class RunwaySimulation{
       System.out.println("The average time between takeoffs is:\t" + average_takeoff_time + " minutes.");
       System.out.println("The average time between landings is:\t" + average_landing_time + " minutes.");
 
-      int time_to_next_landing = (int) (average_landing_time + (Math.random() * 4) - 2); // Generate a time to next takeoff/landing +/- 2 min.
-      int time_to_next_takeoff = (int) (average_takeoff_time + (Math.random() * 4) - 2);
+      int time_to_next_landing = (int) (average_landing_time + (Math.random() * average_landing_time) - (average_landing_time / 2)); // Generate a time to next takeoff/landing +/- 2 min.
+      int time_to_next_takeoff = (int) (average_takeoff_time + (Math.random() * average_takeoff_time) - (average_takeoff_time / 2));
 
       for(int min = 1; min <= total_time; min++){
     	  
