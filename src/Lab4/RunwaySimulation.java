@@ -9,7 +9,7 @@ class RunwaySimulation{
       final int LANDINGTIME = 3;
       final int AVGLAND = 1;
       final int AVGTAKEOFF = 1;
-      final int MAXLANDTIME = 5;
+      final int MAXLANDTIME = 9;
       final int TOTALTIME = 300;
       
       runwaySimulate(LANDINGTIME, TAKEOFFTIME, AVGTAKEOFF, AVGLAND, MAXLANDTIME, TOTALTIME);
@@ -29,9 +29,10 @@ class RunwaySimulation{
       LinkedQueue<Plane> landings = new LinkedQueue<Plane>();
       LinkedQueue<Plane> takeoffs = new LinkedQueue<Plane>();
       
+      int number_crashed = 0, number_to_takeoff = 0, number_to_land = 0;
+      
       ArrayList<Plane> landed = new ArrayList<Plane>();
       ArrayList<Plane> tookoff = new ArrayList<Plane>();
-      int number_crashed = 0, number_to_takeoff = 0, number_to_land = 0;
       
       Runway rw = new Runway(takeoff_time, landing_time);
       Averager takeoff_queue_time = new Averager();
@@ -59,7 +60,7 @@ class RunwaySimulation{
     		else
     			landings.add(new Plane(min, 'L')); // Add a new plane to the queue.
     		number_to_land += 1;
-    		time_to_next_landing = (int) (average_landing_time + (Math.random() * 4) - 2); // Regenerate landing time.
+    		time_to_next_landing = (int) (average_landing_time + (Math.random() * average_takeoff_time) - (average_takeoff_time / 2)); // Regenerate landing time.
     	  }
     	  
     	  if(time_to_next_takeoff == 0){
@@ -68,7 +69,7 @@ class RunwaySimulation{
       		else
       			takeoffs.add(new Plane(min, 'T')); // Add a new plane to the queue.
       		number_to_takeoff += 1;
-      		time_to_next_takeoff = (int) (average_takeoff_time + (Math.random() * 4) - 2); // Regenerate takeoff time.
+      		time_to_next_takeoff = (int) (average_takeoff_time + (Math.random() * average_takeoff_time) - (average_takeoff_time / 2)); // Regenerate takeoff time.
       	  }
     	  time_to_next_landing -= 1;
     	  time_to_next_takeoff -= 1;
