@@ -1,5 +1,5 @@
 package Lab4;
-
+/* CSC103 Plane Fred Frey & TImothy Haskihns 4/20/16 */
 class Plane{
    // the plane number arrived to the queue
    // should be in incrementing order

@@ -1,5 +1,5 @@
 package Lab4;
-
+/* CSC103 Runway Fred Frey & TImothy Haskihns 4/20/16 */
 class Runway{
    private int timeForLanding;
    private int timeForTakeoff;
@@ -21,7 +21,7 @@ class Runway{
    public void reduceRemainingTime(){
       if(runwayTimeLeft > 0) 
          --runwayTimeLeft;
-      if(runwayTimeLeft <= 0)
+      if(runwayTimeLeft == 0)
     	  operation = 'I';
    }
    
