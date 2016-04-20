@@ -5,12 +5,12 @@ import java.util.ArrayList;
 
 class RunwaySimulation{
    public static void main(String[] args){
-      final int TAKEOFFTIME = 20;
+      final int TAKEOFFTIME = 2;
       final int LANDINGTIME = 3;
-      final int AVGLAND = 1;
-      final int AVGTAKEOFF = 1;
+      final int AVGLAND = 5;
+      final int AVGTAKEOFF = 7;
       final int MAXLANDTIME = 9;
-      final int TOTALTIME = 300;
+      final int TOTALTIME = 30;
       
       runwaySimulate(LANDINGTIME, TAKEOFFTIME, AVGTAKEOFF, AVGLAND, MAXLANDTIME, TOTALTIME);
    }
@@ -31,8 +31,9 @@ class RunwaySimulation{
 	  LinkedStack<Plane> crashed = new LinkedStack<Plane>();
 	  
 	  LinkedQueue<Plane> not_crashed; // Initialized and used inside of for-loop.
+	  Plane next_lander;
 	  
-      int number_crashed = 0, number_to_takeoff = 0, number_to_land = 0;
+      int number_to_takeoff = 0, number_to_land = 0;
       
       ArrayList<Plane> landed = new ArrayList<Plane>();
       ArrayList<Plane> tookoff = new ArrayList<Plane>();
@@ -77,10 +78,10 @@ class RunwaySimulation{
     	  time_to_next_landing -= 1;
     	  time_to_next_takeoff -= 1;
     	  
-    	  
+    	  // Handle crashing planes
     	  not_crashed = new LinkedQueue<Plane>();
     	  while(!landings.isEmpty()){
-    		  Plane next_lander = landings.remove();
+    		  next_lander = landings.remove();
     		  if ((min - next_lander.getTime()) > max_landtime)
     			  crashed.push(next_lander);
     		  else
@@ -112,7 +113,9 @@ class RunwaySimulation{
       
       System.out.println("\n\n---Results---\nNumber of planes that came to take off: " + number_to_takeoff);
 	  System.out.println("Number of planes that came to land: " + number_to_land);
-	  System.out.println("Number of planes that crashed: " + number_crashed);
+	  System.out.println("Number of planes that crashed: " + crashed.size());
+	  System.out.println("Planes that successfully landed: " + landed.size());
+	  System.out.println("Number lost to sky pirates: " + (number_to_land - (landed.size() + crashed.size())));
 	  System.out.println("Average time spent in takeoff queue: " + takeoff_queue_time.average() + " minutes.");
 	  System.out.println("Average time spent in landing queue: " + landing_queue_time.average() + " minutes.");
    }
