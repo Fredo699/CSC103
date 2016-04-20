@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 class RunwaySimulation{
    public static void main(String[] args){
-      final int TAKEOFFTIME = 2;
+      final int TAKEOFFTIME = 20;
       final int LANDINGTIME = 3;
       final int AVGLAND = 1;
       final int AVGTAKEOFF = 1;
@@ -31,7 +31,7 @@ class RunwaySimulation{
 	  LinkedStack<Plane> crashed = new LinkedStack<Plane>();
 	  
 	  LinkedQueue<Plane> not_crashed; // Initialized and used inside of for-loop.
-      
+	  
       int number_crashed = 0, number_to_takeoff = 0, number_to_land = 0;
       
       ArrayList<Plane> landed = new ArrayList<Plane>();
@@ -77,11 +77,10 @@ class RunwaySimulation{
     	  time_to_next_landing -= 1;
     	  time_to_next_takeoff -= 1;
     	  
-    	  // Handle planes that have crashed:
-    	  LinkedQueue<Plane> landing_clone = landings.clone();
+    	  
     	  not_crashed = new LinkedQueue<Plane>();
-    	  while(!landing_clone.isEmpty()){
-    		  Plane next_lander = landing_clone.remove();
+    	  while(!landings.isEmpty()){
+    		  Plane next_lander = landings.remove();
     		  if ((min - next_lander.getTime()) > max_landtime)
     			  crashed.push(next_lander);
     		  else

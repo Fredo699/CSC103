@@ -160,7 +160,7 @@ public class Node<E>
    * @exception OutOfMemoryError
    *   Indicates that there is insufficient memory for the new list.   
    **/
-   public static <E> Node<E>[ ] listCopyWithTail(Node<E> source)
+public static <E> Node<E>[ ] listCopyWithTail(Node<E> source)
    {
       Node<E> copyHead;
       Node<E> copyTail;
