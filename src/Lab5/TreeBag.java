@@ -34,7 +34,7 @@ public class TreeBag<E> implements Cloneable {
      * @param element
      **/
     public void add(Comparable element) {
-        // Implemented by student.
+        System.out.println(element.toString());
     }
 
     /**
@@ -63,6 +63,10 @@ public class TreeBag<E> implements Cloneable {
      **/
     public void display() {
 
+    }
+
+    public String toString(){
+        return "=}testing toString()";
     }
 }
            
