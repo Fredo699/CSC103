@@ -59,9 +59,8 @@ public class Company {
     public void loadFromFile(String file_name) {
         FileReader file_in;
         Scanner file_scan;
-        String line;
+        String line, line_split[];
         Employee tmp_employee;
-        String[] tmp_str_array;
 
         try {
             file_in = new FileReader(file_name);
@@ -69,11 +68,11 @@ public class Company {
 
             while (file_scan.hasNextLine()) {
                 line = file_scan.nextLine();
-                tmp_str_array = line.split("\\s+");
+                line_split = line.split("\\s+");
                 tmp_employee = new Employee(
-                        Integer.parseInt(tmp_str_array[0]), tmp_str_array[1],
-                        tmp_str_array[2], Double.parseDouble(tmp_str_array[3]));
-                System.out.println(tmp_employee.toString()+"\n");
+                        Integer.parseInt(line_split[0]), line_split[1],
+                        line_split[2], Double.parseDouble(line_split[3]));
+                employeeTreeBag.add(tmp_employee);
             }
         } catch (Exception e) {
             e.printStackTrace();

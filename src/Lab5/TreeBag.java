@@ -33,8 +33,23 @@ public class TreeBag<E> implements Cloneable {
      *
      * @param element
      **/
+    @SuppressWarnings("unchecked")
     public void add(Comparable element) {
-        System.out.println(element.toString());
+        addNode(element, root);
+    }
+
+    @SuppressWarnings("unchecked")
+    private BTNode<E> addNode(Comparable x, BTNode<E> p) {
+        if (p == null)
+            //create the node - base case
+            p = new BTNode(x, null, null);
+        else if (x.compareTo(p.getData()) < 0)
+            p.setLeft(addNode(x, p.getLeft()));
+        else if (x.compareTo(p.getData()) > 0)
+            p.setRight(addNode(x, p.getRight()));
+        else // keys are equal – replace with new data
+            p.setData((E) x);
+        return p;
     }
 
     /**
@@ -65,7 +80,7 @@ public class TreeBag<E> implements Cloneable {
 
     }
 
-    public String toString(){
+    public String toString() {
         return "=}testing toString()";
     }
 }

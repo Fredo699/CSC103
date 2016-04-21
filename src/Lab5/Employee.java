@@ -53,6 +53,9 @@ public class Employee implements Cloneable, Comparable {
     // the method returns an integer that is less than, equal to, or greater then zero if the
     //executing object is less than, equal to, or greater than the parameter, respectively.
     public int compareTo(Object obj) {
+        Employee temp = (Employee) obj;
+        if(temp.getId() > acctID) return 1;
+        else if(temp.getId() < acctID) return -1;
         return 0;
     }
 }
