@@ -2,7 +2,6 @@ package Lab5;
 
 import java.io.FileReader;
 import java.util.Scanner;
-import java.util.stream.Stream;
 
 /**
  * @author Tim Haskins
@@ -52,7 +51,7 @@ public class Company {
                     break;
                 default:
             }
-            System.out.println("employeeTreeBag" + employeeTreeBag);
+            employeeTreeBag.display();
         }
     }
 

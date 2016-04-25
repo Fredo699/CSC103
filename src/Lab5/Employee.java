@@ -10,7 +10,7 @@ public class Employee implements Cloneable, Comparable {
     private String lastName;
     private double salary;
 
-    public Employee(int id, String l_name, String f_name, double amount) {
+    public Employee(int id, String f_name, String l_name, double amount) {
         acctID = id;
         lastName = l_name;
         firstName = f_name;
@@ -43,9 +43,7 @@ public class Employee implements Cloneable, Comparable {
 
     // a method to print information about the employee
     public String toString() {
-        return "ID:\t\t" + acctID + "\n" +
-                "Name:\t" + lastName + ", " + firstName + "\n" +
-                "Salary:\t$" + salary;
+        return String.format("%-4d\t%-9s\t%-9s\t$%6.2f",acctID,lastName,firstName,salary);
     }
 
     // a method to compare if object that invokes this method is greater then, equal or less

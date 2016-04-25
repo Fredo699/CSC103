@@ -18,8 +18,6 @@ package Lab5;
  * because this is a Programming Project for my students.
  *
  * @version Jan 24, 1999
- * @see IntArrayBag
- * @see IntLinkedBag
  ******************************************************************************/
 public class TreeBag<E> implements Cloneable {
     // Invariant of the IntTreeBag class:
@@ -35,13 +33,20 @@ public class TreeBag<E> implements Cloneable {
      **/
     @SuppressWarnings("unchecked")
     public void add(Comparable element) {
+        System.out.println(element.toString());
         addNode(element, root);
     }
 
+    /**
+     * Insert a new element into this bag
+     *
+     * @param x
+     * @param p
+     * @return BTNode
+     **/
     @SuppressWarnings("unchecked")
     private BTNode<E> addNode(Comparable x, BTNode<E> p) {
-        if (p == null)
-            //create the node - base case
+        if (p == null) // create the node - base case
             p = new BTNode(x, null, null);
         else if (x.compareTo(p.getData()) < 0)
             p.setLeft(addNode(x, p.getLeft()));
@@ -77,11 +82,7 @@ public class TreeBag<E> implements Cloneable {
      * Display the tree
      **/
     public void display() {
-
-    }
-
-    public String toString() {
-        return "=}testing toString()";
+        System.out.println("Displaying Tree");
     }
 }
            
