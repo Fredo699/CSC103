@@ -1,10 +1,12 @@
 package Lab5;
 
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.Scanner;
 
 /**
- * @author Tim Haskins
+ * @author Tim Haskins & Fred Frey
  * @created 4/20/16
  */
 public class Company {
@@ -21,37 +23,49 @@ public class Company {
      */
     public void menu(String st) {
         System.out.println(st);
-        String input[] = st.split("\\s?(-|–)\\s?");
-        String args, tmp_str_array[];
+        String input[] = st.split("\\s?-\\s?");
+        String args = null, tmp_str_array[] = null;
         Employee temp_employee;
         int cmd = Integer.parseInt(input[0]);
 
         if (input.length > 1) {
             args = input[1];
-            switch (cmd) {
+            tmp_str_array = args.split("\\s+"); // Probably better to do this out here.
+        }
+        try{switch (cmd) {
                 case 1:
                     loadFromFile(args);
                     break;
                 case 2:
-                    tmp_str_array = args.split("\\s+");
                     employeeTreeBag.add(new Employee(
                             Integer.parseInt(tmp_str_array[0]), tmp_str_array[1],
                             tmp_str_array[2], Double.parseDouble(tmp_str_array[3])));
                     break;
                 case 3:
+                	employeeTreeBag.remove(new Employee(Integer.parseInt(tmp_str_array[0])));
                     break;
                 case 4:
+                	temp_employee = (Employee) employeeTreeBag.retrieve(new Employee(Integer.parseInt(tmp_str_array[0])));
+                	System.out.println(temp_employee);
+                	System.out.println(employeeTreeBag.display());
                     break;
                 case 5:
-                    tmp_str_array = args.split("\\s+");
-                    for (String param : tmp_str_array)
-                        System.out.println(param);
+                    temp_employee = (Employee) employeeTreeBag.retrieve(new Employee(Integer.parseInt(tmp_str_array[0])));
+                    temp_employee.setSalary(Double.parseDouble(tmp_str_array[1])); // don't have to add, because this changes the *actual* node object.
+                    System.out.println(employeeTreeBag.display());
                     break;
                 case 6:
+                	System.out.println(employeeTreeBag.display());
                     break;
+                case 7:
+                	writeOutput();
+                	System.exit(0);
+                	break;
                 default:
+                	System.out.println("Unrecognized command: '" + cmd + "'.");
             }
-            employeeTreeBag.display();
+        }catch (Exception e){
+        	e.printStackTrace();
         }
     }
 
@@ -74,7 +88,24 @@ public class Company {
                 employeeTreeBag.add(tmp_employee);
             }
         } catch (Exception e) {
+        	System.out.println("Failed to load file.");
             e.printStackTrace();
         }
     }
+    
+    public void writeOutput(){
+    	File file;
+    	FileWriter file_out;
+    	try{
+    		file = new File("outEmployee.txt");
+    		file.createNewFile();
+    		file_out = new FileWriter(file);
+    		file_out.write(employeeTreeBag.display_preorder());
+    		file_out.close();
+    		
+    	} catch (Exception e){
+    		e.printStackTrace();
+    	}
+    }
+    
 }
