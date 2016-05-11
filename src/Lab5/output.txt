@@ -1,0 +1,82 @@
+create the tree from an input file Employee.txt
+-----------------
+1 - Employee.txt
+6274	Johnson  	John     	315.56
+2843	Wilson   	Mark     	7217.23
+4892	Albright 	Dana     	31462.56
+8337	Douglas  	Debra    	127.26
+1892	Gold     	Bruce    	719.32
+9523	Carlson  	John     	1496.24
+3165	Smith    	Mary     	918.26
+3924	Becker   	Simon    	485.85
+6023	Edgar    	John     	  9.65
+8529	Fairchild	Ellen    	 86.77
+1144	Williams 	Donald   	4114.26
+
+----------------------------------------------------------------------------
+add an employee to the tree
+---------------------------------
+2 - 5290 George Truman 16110.68
+5290	Truman   	George   	16110.68
+
+----------------------------------------------------------------------------
+remove an employee from the tree
+---------------------------------------
+3 - 4892
+
+----------------------------------------------------------------------------
+
+retrieve an employee from the tree and print the employee record
+-------------------------------------------------------------------------------
+4 - 3924
+3924	Becker   	Simon    	485.85
+1144	Williams 	Donald   	4114.26
+1892	Gold     	Bruce    	719.32
+2843	Wilson   	Mark     	7217.23
+3165	Smith    	Mary     	918.26
+3924	Becker   	Simon    	485.85
+5290	Truman   	George   	16110.68
+6023	Edgar    	John     	  9.65
+6274	Johnson  	John     	315.56
+8337	Douglas  	Debra    	127.26
+8529	Fairchild	Ellen    	 86.77
+9523	Carlson  	John     	1496.24
+
+
+----------------------------------------------------------------------------
+
+update an employee from the tree and print the new 
+---------------------------------------------------------------
+5 - 3924 20000.00
+1144	Williams 	Donald   	4114.26
+1892	Gold     	Bruce    	719.32
+2843	Wilson   	Mark     	7217.23
+3165	Smith    	Mary     	918.26
+3924	Becker   	Simon    	20000.00
+5290	Truman   	George   	16110.68
+6023	Edgar    	John     	  9.65
+6274	Johnson  	John     	315.56
+8337	Douglas  	Debra    	127.26
+8529	Fairchild	Ellen    	 86.77
+9523	Carlson  	John     	1496.24
+
+
+----------------------------------------------------------------------------
+
+display the tree 
+--------------------
+6
+1144	Williams 	Donald   	4114.26
+1892	Gold     	Bruce    	719.32
+2843	Wilson   	Mark     	7217.23
+3165	Smith    	Mary     	918.26
+3924	Becker   	Simon    	20000.00
+5290	Truman   	George   	16110.68
+6023	Edgar    	John     	  9.65
+6274	Johnson  	John     	315.56
+8337	Douglas  	Debra    	127.26
+8529	Fairchild	Ellen    	 86.77
+9523	Carlson  	John     	1496.24
+
+----------------------------------------------------------------------------
+
